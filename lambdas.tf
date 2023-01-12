@@ -25,7 +25,7 @@ resource "aws_lambda_function" "get_youtube_data" {
 
   role = aws_iam_role.lambda_exec_role.arn
   memory_size = 128
-  timeout = 1000
+  timeout = 900
 
   depends_on = [null_resource.install_function_dependencies]
   source_code_hash = data.archive_file.get_youtube_data_func_build_pkg.output_base64sha256
