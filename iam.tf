@@ -60,6 +60,22 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       "logs:PutLogEvents",
     ]
   }
+
+  statement {
+    sid = "AllowReadingSecrets"
+    effect = "Allow"
+
+    resources = [
+      "arn:aws:secretsmanager:*:*:secret:*"
+    ]
+
+    actions = [
+      "secretsmanager:GetResourcePolicy",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:ListSecretVersionIds"
+    ]
+  }
 }
 
 resource "aws_iam_policy" "lambda_iam_policy" {

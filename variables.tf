@@ -3,6 +3,21 @@ variable "region" {
     default = "ap-south-1"
 }
 
+variable "environment" {
+    type = string
+    default = "prod"
+}
+
+variable "product" {
+    type = string
+    default = "tubesight"
+}
+
+variable "secret_prefix" {
+    type = string
+    default = "querious/tubesight"
+}
+
 variable "runtime" {
     type = string
     default = "python3.9"

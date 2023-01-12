@@ -1,4 +1,7 @@
 #!/bin/bash
+path_cwd="/Users/harshanas/Documents/Work/Querious/tubesight"
+output_dir="backend/build"
+functions_dir="backend/functions"
 
 echo "Building deployment packages for lambda functions..."
 if [ -d $output_dir ]; then
