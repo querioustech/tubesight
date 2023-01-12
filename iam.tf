@@ -76,6 +76,20 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       "secretsmanager:ListSecretVersionIds"
     ]
   }
+
+  statement {
+    sid = "PutObjects"
+    effect = "Allow"
+
+    resources = [
+      "arn:aws:s3:::${var.product}-${var.environment}-responses-raw/*"
+    ]
+
+    actions = [
+      "s3:PutObject",
+      "s3:PutObjectAcl"
+    ]
+  }
 }
 
 resource "aws_iam_policy" "lambda_iam_policy" {

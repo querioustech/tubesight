@@ -35,6 +35,7 @@ resource "aws_lambda_function" "get_youtube_data" {
     variables =  {
       YOUTUBE_API_KEY = "${var.secret_prefix}/${var.environment}/ytdata-apikey"
       REGION = var.region
+      RESPONSES_RAW_BUCKET = "${var.product}-${var.environment}-responses-raw"
     }
   }
 

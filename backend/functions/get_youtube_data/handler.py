@@ -5,16 +5,19 @@ from lib import helpers
 
 
 def handler(event, context):
-    videos = get_videos("LK")
+    regions = ["LK"]
 
-    return videos
+    for region in regions:
+        videos = get_videos(region)
 
-    # return {
-    #     "statusCode": 200,
-    #     "body": json.dumps({
-    #         "result": YOUTUBE_API_KEY
-    #     }),
-    # }
+        helpers.upload_file(region, videos)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "result": "success"
+        }),
+    }
 
 def get_videos(region_code):
     YOUTUBE_API_KEY = helpers.get_secret(os.environ['YOUTUBE_API_KEY'], os.environ['REGION'])
@@ -23,7 +26,7 @@ def get_videos(region_code):
     else:
         return False
 
-    url = 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode={0}&key={1}'.format(region_code, YOUTUBE_API_KEY)
+    url = 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=100&regionCode={0}&key={1}'.format(region_code, YOUTUBE_API_KEY)
 
     response = requests.get(url)
 
