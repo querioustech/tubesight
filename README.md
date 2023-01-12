@@ -11,3 +11,11 @@
 - AWS Cloudwatch Events
 - YouTube Data API
 - Terraform
+
+## Installation
+
+1. Initialize Terraform
+
+    ```
+    terraform init
+    ```
