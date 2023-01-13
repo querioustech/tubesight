@@ -8,9 +8,14 @@ def handler(event, context):
     regions = ["LK"]
 
     for region in regions:
-        videos = get_videos(region)
-
-        helpers.upload_file(region, videos)
+        videos_resp = get_videos(region)
+        if 'items' in videos_resp:
+            videos = {}
+            videos['items'] = videos_resp['items']
+            videos['regionCode'] = region
+            videos['generatedTime'] = helpers.get_dt().strftime('%Y-%m-%d %H:%M:%S')
+            
+            helpers.upload_file(region, videos)
 
     return {
         "statusCode": 200,

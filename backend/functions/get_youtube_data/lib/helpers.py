@@ -5,7 +5,7 @@ from datetime import datetime
 from botocore.exceptions import ClientError
 
 def generate_file_name_by_dt(extension):
-    today_dt = datetime.today()
+    today_dt = get_dt()
 
     file_name = "{}T{}-{}-{}.{}".format(today_dt.date(), today_dt.hour, today_dt.minute, today_dt.second, extension)
 
@@ -41,9 +41,15 @@ def upload_file(region, data):
     file_name = generate_file_name_by_dt("json")
 
     upload_path = '/tmp/{}.json'.format(file_name)
-    object_path = '{}/{}'.format(region, file_name)
+    object_path = '{}-{}'.format(region, file_name)
 
     with open(upload_path, 'w') as outfile:
         json.dump(data, outfile)
     
     client.upload_file(upload_path, bucket, object_path)
+
+
+def get_dt():
+    today_dt = datetime.today()
+
+    return today_dt
