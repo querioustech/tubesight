@@ -1,5 +1,5 @@
-resource "aws_iam_role" "lambda_exec_role" {
-  name = "lambda_exec_role"
+resource "aws_iam_role" "get_youtube_data_lambda_exec_role" {
+  name = "get_youtube_data_lambda_exec_role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -16,11 +16,11 @@ resource "aws_iam_role" "lambda_exec_role" {
 EOF
   tags = {
     "product_name" = "tubesight"
-    "resource" = "tubesight-lambda_exec_role"
+    "resource" = "tubesight-get_youtube_data_lambda_exec_role"
   }
 }
 
-data "aws_iam_policy_document" "lambda_policy_doc" {
+data "aws_iam_policy_document" "get_youtube_data_lambda_policy_doc" {
   statement {
     sid = "AllowInvokingLambdas"
     effect = "Allow"
@@ -92,16 +92,16 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
   }
 }
 
-resource "aws_iam_policy" "lambda_iam_policy" {
-  name = "lambda_iam_policy"
-  policy = data.aws_iam_policy_document.lambda_policy_doc.json
+resource "aws_iam_policy" "get_youtube_data_lambda_iam_policy" {
+  name = "get_youtube_data_lambda_iam_policy"
+  policy = data.aws_iam_policy_document.get_youtube_data_lambda_policy_doc.json
   tags = {
     "product_name" = "tubesight"
-    "resource" = "tubesight-lambda_iam_policy"
+    "resource" = "tubesight-get_youtube_data_lambda_iam_policy"
   }
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  policy_arn = aws_iam_policy.lambda_iam_policy.arn
-  role = aws_iam_role.lambda_exec_role.name
+  policy_arn = aws_iam_policy.get_youtube_data_lambda_iam_policy.arn
+  role = aws_iam_role.get_youtube_data_lambda_exec_role.name
 }

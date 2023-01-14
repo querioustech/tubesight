@@ -23,7 +23,7 @@ resource "aws_lambda_function" "get_youtube_data" {
   handler = "handler.handler"
   runtime = var.runtime
 
-  role = aws_iam_role.lambda_exec_role.arn
+  role = aws_iam_role.get_youtube_data_lambda_exec_role.arn
   memory_size = 128
   timeout = 900
 
