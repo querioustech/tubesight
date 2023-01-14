@@ -44,3 +44,36 @@ resource "aws_lambda_function" "get_youtube_data" {
     "resource" = "${var.product}-get-youtube-data"
   }
 }
+
+data "archive_file" "store_stats_func_build_pkg" {
+  depends_on = [null_resource.install_function_dependencies]
+  source_dir = "${path.cwd}/${var.output_dir}/store_stats"
+  output_path = "${path.cwd}/${var.output_dir}/store_stats.zip"
+  type = "zip"
+}
+
+resource "aws_lambda_function" "store_stats" {
+  function_name = "${var.product}-${var.environment}-store-stats"
+  handler = "handler.handler"
+  runtime = var.runtime
+
+  role = aws_iam_role.get_youtube_data_lambda_exec_role.arn
+  memory_size = 128
+  timeout = 900
+
+  depends_on = [null_resource.install_function_dependencies]
+  source_code_hash = data.archive_file.store_stats_func_build_pkg.output_base64sha256
+  filename = data.archive_file.store_stats_func_build_pkg.output_path
+
+  environment {
+    variables =  {
+      REGION = var.region
+      RESPONSES_RAW_BUCKET = "${var.product}-${var.environment}-responses-raw"
+    }
+  }
+
+  tags = {
+    "product_name" = var.product
+    "resource" = "${var.product}-store-stats"
+  }
+}
