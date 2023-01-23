@@ -17,8 +17,8 @@ resource "aws_iam_role" "get_youtube_data_lambda_exec_role" {
 }
 EOF
   tags = {
-    "product_name" = "tubesight"
-    "resource" = "tubesight-get_youtube_data_lambda_exec_role"
+    "product_name" = var.product
+    "resource" = "${var.product}-get-youtube-data-lambda-exec-role"
   }
 }
 
@@ -98,8 +98,8 @@ resource "aws_iam_policy" "get_youtube_data_lambda_iam_policy" {
   name = "lambda_iam_policy"
   policy = data.aws_iam_policy_document.get_youtube_data_lambda_policy_doc.json
   tags = {
-    "product_name" = "tubesight"
-    "resource" = "tubesight-get_youtube_data_lambda_iam_policy"
+    "product_name" = var.product
+    "resource" = "${var.product}-get-youtube-data-lambda-iam-policy"
   }
 }
 
@@ -126,8 +126,8 @@ resource "aws_iam_role" "store_stats_lambda_exec_role" {
 }
 EOF
   tags = {
-    "product_name" = "tubesight"
-    "resource" = "tubesight-store_stats_lambda_exec_role"
+    "product_name" = var.product
+    "resource" = "${var.product}-store-stats-lambda-exec-role"
   }
 }
 
@@ -191,8 +191,8 @@ resource "aws_iam_policy" "store_stats_lambda_iam_policy" {
   name = "store_stats_lambda_iam_policy"
   policy = data.aws_iam_policy_document.store_stats_lambda_policy_doc.json
   tags = {
-    "product_name" = "tubesight"
-    "resource" = "tubesight-store_stats_lambda_iam_policy"
+    "product_name" = var.product
+    "resource" = "${var.product}-store-stats-lambda-iam-policy"
   }
 }
 
