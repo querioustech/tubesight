@@ -9,11 +9,10 @@ resource "aws_db_instance" "statistics_db" {
     username = jsondecode(data.aws_secretsmanager_secret_version.statistics_db.secret_string)["username"]
     password = jsondecode(data.aws_secretsmanager_secret_version.statistics_db.secret_string)["password"]
     skip_final_snapshot  = true
+    publicly_accessible = true
+    vpc_security_group_ids = [aws_security_group.tubesight_db_sg.id]
     tags = {
         "product_name" = var.product
         "resource" = "${var.product}-statistics-db"
-    }
-    provisioner "local-exec" {
-        command = "mysql --host=${self.address} --port=${self.port} --user=${self.username} --password=${self.password} < ./schema.sql"
     }
 }
